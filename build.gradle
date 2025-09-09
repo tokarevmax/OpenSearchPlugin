@@ -1,0 +1,42 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.example'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'info.picocli:picocli:4.7.6'
+    implementation 'org.slf4j:slf4j-simple:2.0.7'
+}
+
+application {
+    mainClass = 'com.example.logstats.Main'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.named('test') {
+    enabled = false
+}
+
+shadowJar {
+    archiveBaseName.set('logstats')
+    archiveClassifier.set('')
+    archiveVersion.set(project.version)
+}

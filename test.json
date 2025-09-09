@@ -1,0 +1,31 @@
+[
+  {
+    "name": "alpha",
+    "host": "h1",
+    "number": 10
+  },
+  {
+    "name": "alpha",
+    "host": "h1",
+    "number": 20
+  },
+  {
+    "name": "beta",
+    "host": "h2",
+    "number": 10
+  },
+  {
+    "name": "charlie",
+    "host": "h3",
+    "number": 10
+  },
+  {
+    "name": "beta",
+    "host": "h3",
+    "number": "not-a-number"
+  },
+  {
+    "name": "gamma",
+    "host": "h2"
+  }
+]
