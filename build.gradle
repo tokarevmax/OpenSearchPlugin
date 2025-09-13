@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'com.example'
+version = '1.0.0'
+description = 'OpenSearch Stats Plugin (avg/max/cardinality)'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release.set(17)
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "org.opensearch:opensearch:2.19.1"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+tasks.register('pluginZip', Zip) {
+    dependsOn(tasks.named('jar'))
+    from({ tasks.named('jar').get().archiveFile.get().asFile })
+    from('src/main/resources') {
+        include 'plugin-descriptor.properties'
+    }
+    archiveFileName.set("${project.name}-${project.version}.zip")
+    destinationDirectory.set(layout.buildDirectory.dir('distributions'))
+}
+
+build.dependsOn(tasks.named('pluginZip'))
+
